@@ -73,4 +73,14 @@ h1 {
         height: 60px;
         font-size: 18px;
     }
+   /* لون الخلفيه ورا توقيعي */
+     #developer-box {
+    background-color: #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    border-radius: 5px;
+}
 }
