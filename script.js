@@ -26,6 +26,8 @@ function startGame() {
         gameBoard.appendChild(card);
     });
 
+    // شيلنا الحدث السابق قبل ما ينضاف لضمان عدم التكرار
+    document.getElementById("restart-btn").removeEventListener("click", startGame);
     document.getElementById("restart-btn").addEventListener("click", startGame);
 }
 
@@ -45,12 +47,14 @@ function flipCard(card) {
 
 function checkMatch() {
     if (flippedCards[0].dataset.symbol !== flippedCards[1].dataset.symbol) {
-        document.body.style.animation = "wrongMove 0.3s";
         if (navigator.vibrate) navigator.vibrate(200);
+        document.body.style.animation = "wrongMove 0.3s";
 
         flippedCards.forEach(card => {
-            card.classList.remove("flipped");
-            card.textContent = "?";
+            setTimeout(() => {
+                card.classList.remove("flipped");
+                card.textContent = "?";
+            }, 500);
         });
     }
 
@@ -73,11 +77,11 @@ function updateCounter() {
 
 function startCountdown() {
     clearInterval(timer);
-    document.getElementById("timer").textContent = `⏳ لسه متبقيلك  ${timeLeft} ثانية`;
+    document.getElementById("timer").textContent = `⏳ لسه متبقيلك ${timeLeft} ثانية`;
     
     timer = setInterval(() => {
         timeLeft--;
-        document.getElementById("timer").textContent = ` `⏳ لسه متبقيلك ${timeLeft} ثانية`;
+        document.getElementById("timer").textContent = `⏳ لسه متبقيلك ${timeLeft} ثانية`;
 
         if (timeLeft <= 5) {
             document.getElementById("timer").style.color = "red";
@@ -86,7 +90,7 @@ function startCountdown() {
         if (timeLeft <= 0) {
             clearInterval(timer);
             document.body.style.animation = "shake 0.5s ease-in-out";
-            document.getElementById("result-message").textContent = `⏳   الوقت خلص للاسف .. جرب تاني.`;
+            document.getElementById("result-message").textContent = `⏳   الوقت خلص للأسف .. جرب تاني.`;
             document.getElementById("rating-box").style.display = "block";
         }
     }, 1000);
