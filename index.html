@@ -8,22 +8,26 @@
 </head>
 <body>
     <h1>لعبة الذاكرة</h1>
-    
-    <div class="game-info">
-        <p id="move-counter">Moves: 0</p>
-        <p id="timer">Time: 60s</p>
+    <p id="timer">⏳ الوقت: 0 ثانية</p>
+    <p id="move-counter">🚀 الحركات: 0</p>
+
+    <div class="game-board"></div>
+
+    <!-- نافذة التقييم -->
+    <div class="rating-box" id="rating-box">
+        <h2>🎉 مبروك يابطل! قفلت اللعبة!</h2>
+        <p id="result-message"></p>
+        <p>⭐⭐⭐⭐⭐</p>
+        <p>عجبتك اللعبة؟ استنى التحديثات الجايه هتكون احسن!</p>
+        <button id="restart-btn">جولة كمان</button>
     </div>
 
-    <div class="game-board">
-        <!-- سيتم إضافة البطاقات هنا عبر JavaScript -->
-    </div>
-
-    <button id="restart-btn">إعادة التشغيل</button>
-
-    <footer role="contentinfo">
+    <footer>
         <p>تم تصميم وتطوير اللعبة بواسطة <strong>Bassel</strong> © 2025</p>
     </footer>
 
-    <script src="script.js" defer></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/game.js"></script>
 </body>
 </html>
