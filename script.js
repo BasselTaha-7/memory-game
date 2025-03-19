@@ -3,7 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const symbols = ["🍎", "🍌", "🍒", "🍇", "🍉", "🍊", "🥝", "🍓"];
     let cards = [...symbols, ...symbols]; // مضاعفة الرموز لعمل أزواج
 
-   
+    let moveCount = 0;
+    const moveCounter = document.getElementById("move-counter");
+    
+            moveCount++;
+            moveCounter.textContent = 'moves: ${moveCount}';
+    
 
     // ترتيب عشوائي للبطاقات
     cards.sort(() => Math.random() - 0.5);
