@@ -2,17 +2,19 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f4f4f4;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
 }
 
 h1 {
     color: #333;
-    margin-bottom: 20px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .game-board {
@@ -36,15 +38,28 @@ h1 {
     user-select: none;
     transition: transform 0.6s ease;
     transform-style: preserve-3d;
-    overflow: hidden;
 }
-
 .card.flipped {
     transform: rotateY(180deg);
 }
 
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #555;
+}
+
 footer {
-    margin-top: auto;
+    margin-top: 20px;
     padding: 10px;
     background-color: #333;
     color: white;
