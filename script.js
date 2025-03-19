@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const gameBoard = document.querySelector(".game-board");
     const symbols = ["🍎", "🍌", "🍒", "🍇", "🍉", "🍊", "🥝", "🍓"];
-    let cards = [...symbols, ...symbols]; // مضاعفة الرموز لإنشاء أزواج
+    let cards = [...symbols, ...symbols]; // مضاعفة الرموز لعمل أزواج
 
     // ترتيب عشوائي للبطاقات
     cards.sort(() => Math.random() - 0.5);
@@ -9,13 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // إنشاء البطاقات
     cards.forEach(symbol => {
         const card = document.createElement("div");
-        card.classList.add("card");
+        setTimeout(() => {
+        card.classList.add("flipped");
+        }, 90);
         card.dataset.symbol = symbol;
         card.textContent = "?"; // إخفاء الرمز في البداية
         gameBoard.appendChild(card);
     });
 
-    // إضافة التفاعل مع البطاقات
+    //  التفاعل مع البطاقات
     let flippedCards = [];
     gameBoard.addEventListener("click", (e) => {
         if (e.target.classList.contains("card") && flippedCards.length < 2) {
