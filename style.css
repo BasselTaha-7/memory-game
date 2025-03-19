@@ -8,23 +8,20 @@ h1 {
     color: #333;
 }
 
-#timer, #move-counter {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
 .game-board {
     display: grid;
-    grid-template-columns: repeat(4, 100px);
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     grid-gap: 10px;
     justify-content: center;
     margin-top: 20px;
+    max-width: 400px;
+    margin: auto;
 }
 
 .card {
-    width: 100px;
-    height: 100px;
-    background-color: white;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
     border: 2px solid #333;
     display: flex;
     align-items: center;
@@ -40,43 +37,40 @@ h1 {
     transform: rotateY(180deg);
 }
 
-.rating-box {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-}
-
-.rating-box h2 {
-    margin-bottom: 10px;
+#rating-box {
+    margin-top: 20px;
 }
 
 #restart-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 18px;
     cursor: pointer;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
 }
 
+/* تأثير الاهتزاز عند الخطأ */
+@keyframes wrongMove {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+
+/* تأثير اهتزاز عند انتهاء الوقت */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+/* تحسينات للموبايل */
 @media (max-width: 600px) {
     .game-board {
-        grid-template-columns: repeat(4, 80px);
+        grid-template-columns: repeat(4, 60px);
     }
-
+    
     .card {
-        width: 80px;
-        height: 80px;
-        font-size: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 18px;
     }
 }
