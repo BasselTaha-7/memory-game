@@ -27,7 +27,13 @@ h1 {
     font-size: 24px;
     cursor: pointer;
     user-select: none;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
 }
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
 footer {
     margin-top: 20px;
     padding: 10px;
