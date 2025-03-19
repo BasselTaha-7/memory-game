@@ -5,37 +5,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let moveCount = 0;
     const moveCounter = document.getElementById("move-counter");
-    
-            moveCount++;
-            moveCounter.textContent = 'moves: ${moveCount}';
-    
 
-    // ترتيب عشوائي للبطاقات
+    // ترتيب عشوائي للبطايق
     cards.sort(() => Math.random() - 0.5);
 
-    // إنشاء البطاقات
+    // إنشاء البطايق وإضافتها إلى اللوحة
     cards.forEach(symbol => {
         const card = document.createElement("div");
-        setTimeout(() => {
-        card.classList.add("flipped");
-        }, 90);
+        card.classList.add("card"); // إضافة كلاس البطاقة
         card.dataset.symbol = symbol;
         card.textContent = "?"; // إخفاء الرمز في البداية
         gameBoard.appendChild(card);
     });
 
-    //  التفاعل مع البطاقات
+    // التفاعل مع البطايق
     let flippedCards = [];
     gameBoard.addEventListener("click", (e) => {
-        if (e.target.classList.contains("card") && flippedCards.length < 2) {
+        if (e.target.classList.contains("card") && flippedCards.length < 2 && !e.target.classList.contains("flipped")) {
             e.target.textContent = e.target.dataset.symbol;
+            e.target.classList.add("flipped");
             flippedCards.push(e.target);
 
-            
             if (flippedCards.length === 2) {
+                // تحديث العداد مع كل حركة تتعمل
+                moveCount++;
+                moveCounter.textContent = `Moves: ${moveCount}`;
+
                 setTimeout(() => {
                     if (flippedCards[0].dataset.symbol !== flippedCards[1].dataset.symbol) {
-                        flippedCards.forEach(card => card.textContent = "?");
+                        flippedCards.forEach(card => {
+                            card.textContent = "?";
+                            card.classList.remove("flipped");
+                        });
                     }
                     flippedCards = [];
                 }, 1000);
