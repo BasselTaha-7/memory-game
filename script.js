@@ -1,73 +1,90 @@
-document.addEventListener("DOMContentLoaded", startGame);
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("restart-btn").addEventListener("click", startGame);
+    startGame();
+});
 
-let cards, flippedCards, moveCount, timer, timeLeft;
-const startingTime = 60; // وقت البداية
+const startingTime = 60;
+let cards = [];
+let flippedCards = [];
+let moveCount = 0;
+let timer = null;
+let resolveTimeout = null;
+let timeLeft = startingTime;
+let gameActive = false;
 
 function startGame() {
-    document.getElementById("rating-box").style.display = "none";
-    document.body.style.animation = ""; // وقف الاهتزاز عند إعادة اللعب
-    const gameBoard = document.querySelector(".game-board");
-    gameBoard.innerHTML = "";
-    const symbols = ["🍎", "🍌", "🍒", "🍇", "🍉", "🍊", "🥝", "🍓"];
-    cards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+    clearInterval(timer);
+    clearTimeout(resolveTimeout);
+    resolveTimeout = null;
+    gameActive = true;
     flippedCards = [];
     moveCount = 0;
     timeLeft = startingTime;
-    
+
+    document.getElementById("rating-box").style.display = "none";
+    document.body.style.animation = "";
+    document.getElementById("timer").style.color = "";
+
+    const gameBoard = document.querySelector(".game-board");
+    gameBoard.replaceChildren();
+    const symbols = ["🍎", "🍌", "🍒", "🍇", "🍉", "🍊", "🥝", "🍓"];
+    cards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+
     updateCounter();
     startCountdown();
 
-    cards.forEach(symbol => {
-        const card = document.createElement("div");
+    cards.forEach((symbol, index) => {
+        const card = document.createElement("button");
+        card.type = "button";
         card.classList.add("card");
         card.dataset.symbol = symbol;
         card.textContent = "?";
+        card.setAttribute("aria-label", `بطاقة ${index + 1}، مخفية`);
         card.addEventListener("click", () => flipCard(card));
         gameBoard.appendChild(card);
     });
-
-    // شيلنا الحدث السابق قبل ما ينضاف لضمان عدم التكرار
-    document.getElementById("restart-btn").removeEventListener("click", startGame);
-    document.getElementById("restart-btn").addEventListener("click", startGame);
 }
 
 function flipCard(card) {
-    if (flippedCards.length < 2 && !card.classList.contains("flipped")) {
-        card.textContent = card.dataset.symbol;
-        card.classList.add("flipped");
-        flippedCards.push(card);
+    if (!gameActive || flippedCards.length >= 2 || card.classList.contains("flipped")) {
+        return;
+    }
 
-        if (flippedCards.length === 2) {
-            moveCount++;
-            updateCounter();
-            setTimeout(checkMatch, 1000);
-        }
+    card.textContent = card.dataset.symbol;
+    card.classList.add("flipped");
+    card.setAttribute("aria-label", `بطاقة مكشوفة: ${card.dataset.symbol}`);
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+        moveCount++;
+        updateCounter();
+        const [firstCard, secondCard] = flippedCards;
+        resolveTimeout = setTimeout(() => resolvePair(firstCard, secondCard), 800);
     }
 }
 
-function checkMatch() {
-    if (flippedCards[0].dataset.symbol !== flippedCards[1].dataset.symbol) {
-        if (navigator.vibrate) navigator.vibrate(200);
-        document.body.style.animation = "wrongMove 0.3s";
-
-        flippedCards.forEach(card => {
-            setTimeout(() => {
-                card.classList.remove("flipped");
-                card.textContent = "?";
-            }, 500);
+function resolvePair(firstCard, secondCard) {
+    resolveTimeout = null;
+    if (firstCard.dataset.symbol !== secondCard.dataset.symbol) {
+        [firstCard, secondCard].forEach(card => {
+            card.classList.remove("flipped");
+            card.textContent = "?";
+            card.setAttribute("aria-label", "بطاقة مخفية");
         });
     }
 
     flippedCards = [];
-
     if (document.querySelectorAll(".card.flipped").length === cards.length) {
         gameWon();
     }
 }
 
 function gameWon() {
+    gameActive = false;
     clearInterval(timer);
-    document.getElementById("result-message").textContent = `🎉  كسبت يا بطل في ${moveCount} حركة خلال ${startingTime - timeLeft} ثانية!`;
+    const elapsedSeconds = startingTime - timeLeft;
+    document.getElementById("result-message").textContent =
+        `🎉 أحسنت! أكملت اللعبة في ${moveCount} حركة خلال ${elapsedSeconds} ثانية.`;
     document.getElementById("rating-box").style.display = "block";
 }
 
@@ -76,21 +93,22 @@ function updateCounter() {
 }
 
 function startCountdown() {
-    clearInterval(timer);
-    document.getElementById("timer").textContent = `⏳ لسه متبقيلك ${timeLeft} ثانية`;
-    
+    const timerText = document.getElementById("timer");
+    timerText.textContent = `⏳ الوقت المتبقي: ${timeLeft} ثانية`;
     timer = setInterval(() => {
         timeLeft--;
-        document.getElementById("timer").textContent = `⏳ لسه متبقيلك ${timeLeft} ثانية`;
-
-        if (timeLeft <= 5) {
-            document.getElementById("timer").style.color = "red";
-        }
+        timerText.textContent = `⏳ الوقت المتبقي: ${timeLeft} ثانية`;
+        timerText.style.color = timeLeft <= 5 ? "#b42318" : "";
 
         if (timeLeft <= 0) {
+            gameActive = false;
             clearInterval(timer);
+            clearTimeout(resolveTimeout);
+            resolveTimeout = null;
+            flippedCards = [];
             document.body.style.animation = "shake 0.5s ease-in-out";
-            document.getElementById("result-message").textContent = `⏳   الوقت خلص للأسف .. جرب تاني.`;
+            document.getElementById("result-message").textContent =
+                "⏳ انتهى الوقت. ابدأ جولة جديدة وحاول مرة أخرى.";
             document.getElementById("rating-box").style.display = "block";
         }
     }, 1000);

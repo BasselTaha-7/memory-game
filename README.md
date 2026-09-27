@@ -1,38 +1,25 @@
-# Memory Card Game
+# Arabic Memory Card Game
 
-This is a simple memory card game I built using HTML, CSS, and JavaScript.  
-The goal is to match all the identical cards by flipping two at a time. If they match, they stay flipped — if not, they flip back.
+A small browser memory game in Arabic. Flip cards two at a time, match all eight pairs before the 60-second countdown ends, and try to improve your move count. Built by Bassel Taha with HTML, CSS, and vanilla JavaScript.
 
 ## Features
 
-- Works on both desktop and mobile
-- Simple clean design
-- Flip animations using CSS
-- Restart button to reset the game anytime
+- 16 cards with eight matching pairs, shuffled at the start of each round.
+- 60-second countdown, move counter, win/loss message, and restart button.
+- Responsive four-column board on smaller screens.
+- Keyboard-operable cards and live announcements for moves, time, and results.
+- No external libraries or build step.
 
-## Technologies Used
+## Run locally
 
-- HTML5  
-- CSS3  
-- JavaScript (Vanilla)
+Open `index.html` in a modern browser.
 
-## Why I Built It
+## Tech stack
 
-I wanted to practice my JavaScript skills by building something interactive and fun.  
-This project helped me understand how to work with the DOM, events, and game logic in a practical way.
-
-## Future Ideas
-
-- Add a timer and a score counter  
-- Add sound effects  
-- Save high scores using local storage
+- HTML5
+- CSS3 (Grid, responsive layout, transitions)
+- Vanilla JavaScript (DOM events and timers)
 
 ## Contact
 
-If you’d like to give feedback or connect:  
-📧 Email: basselt50@icloud.com  
-🔗 LinkedIn: [https://www.linkedin.com/in/bassel-taha-3a2120220](https://www.linkedin.com/in/bassel-taha-3a2120220)
-
----
-
-Thanks for checking out my project!
+For project feedback or professional contact, use [LinkedIn](https://www.linkedin.com/in/bassel-taha-3a2120220).

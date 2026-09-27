@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p id="move-counter">🚀 الحركات: 0</p>
-    <p id="timer">⏳  باقيلك : 60 ثانية</p>
-    <div class="game-board"></div>
+    <p id="move-counter" aria-live="polite">🚀 الحركات: 0</p>
+    <p id="timer" aria-live="polite">⏳ الوقت المتبقي: 60 ثانية</p>
+    <div class="game-board" aria-label="بطاقات لعبة الذاكرة"></div>
     <div id="rating-box" style="display: none;">
-        <p id="result-message"></p>
-        <button id="restart-btn">جولة كمان</button>
+        <p id="result-message" aria-live="polite"></p>
+        <button id="restart-btn" type="button">جولة كمان</button>
     </div>
     <div id="developer-box">
     <p>🚀 تم تطوير اللعبة بواسطة <strong>@Bassel Taha</strong></p>
 </div>
     <script src="script.js"></script>
-        <script src="ui.js"></script>
 </body>
 </html>
